@@ -24,9 +24,10 @@ g = graph()
 
 class path_finding():
 
-    def __init__(self, g):
+    def __init__(self, g, pars):
         self.graph = g.build_graph(pars)
         self.i = 0
+        self.hubs = pars.hubs
     def c(self):
         self.i +=1
         return self.i  
@@ -38,6 +39,15 @@ class path_finding():
             node = parents[node]
         path.reverse()
         return path
+    
+    def find_start(self):
+        result =  {}
+        for i in self.hubs:
+            if i.is_start:
+                result["start"] = i
+            if i.is_end:
+                result["end"] = i
+        return result
 
     def dijkstra(self, start, end):
         distance = pars.calcule_distance()
@@ -56,8 +66,13 @@ class path_finding():
         if distance[end] == float("inf"):
             return None
         return self.find_parent(end, parent)     
-    
+    def find_paths(self):
+        paths = []
+        paths.append(self.dijkstra(self.find_start()["start"], self.find_start()["end"]))
+        for i in paths[0]:
+            i.is_blocked = True 
         
-path = path_finding(g)
+path = path_finding(g, pars)
+path.find_paths()
 
-print(path.dijkstra(pars.hubs[0], pars.hubs[4]))
+# print(path.dijkstra(pars.hubs[0], pars.hubs[4]))

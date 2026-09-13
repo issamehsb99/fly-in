@@ -16,6 +16,7 @@ class zone_class:
         self.cost: int = 1
         self.zone_type: str = ""
         self.is_start: bool = False
+        self.is_blocked: bool = False
         self.is_end: bool = False
         self.capacity: int = 0
         self.connection = connection_class()
